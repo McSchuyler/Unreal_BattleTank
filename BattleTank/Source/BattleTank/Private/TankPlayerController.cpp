@@ -1,11 +1,12 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankPlayerController.h"
+#include "Tank.h"
+
 
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 
@@ -13,7 +14,6 @@ void ATankPlayerController::Tick(float deltatime)
 {
 	Super::Tick(deltatime);
 	AimTowardsCrosshair();
-	
 }
 
 //Get pawn of the player controlled tank
@@ -36,7 +36,7 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& OUT_HitLocation) con
 	int32 viewportSizeY;
 	GetViewportSize(viewportSizeX, viewportSizeY);
 	//calculate actual crosshair location in pixel
-	auto screenLocation = FVector2D(crosshairXLocation,crosshairYLocation);
+	auto screenLocation = FVector2D(crosshairXLocation, crosshairYLocation);
 
 	//Get location hit by line trace with camera direction coressponding to the crosshair
 	FVector cameraWorldDirection;
@@ -59,7 +59,7 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector lookDirection, FVec
 		cameraLocation,
 		lineTraceEndLocation,
 		ECollisionChannel::ECC_Visibility
-		))
+	))
 	{
 		OUT_hitLocation = hit.Location;
 
@@ -73,11 +73,12 @@ void ATankPlayerController::AimTowardsCrosshair()
 {
 	if (!GetControlledTank()) { return; }
 	FVector hitLocation; //OUT parameter
-	
+
 	if (GetSightRayHitLocation(hitLocation))
 	{
 		//tell controlled tank to aim at hit location
-		UE_LOG(LogTemp, Warning, TEXT("Hit Location : %s"), *hitLocation.ToString());
+		GetControlledTank()->AimAt(hitLocation);
+
 	}
 }
 

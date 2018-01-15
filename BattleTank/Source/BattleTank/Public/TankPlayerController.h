@@ -3,20 +3,21 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Tank.h"
 #include "GameFramework/PlayerController.h"
 #include "Engine/World.h"
 #include "Camera/PlayerCameraManager.h"
 #include "TankPlayerController.generated.h"
 
 /**
- * 
- */
+*
+*/
+class ATank;
+
 UCLASS()
 class BATTLETANK_API ATankPlayerController : public APlayerController
 {
 	GENERATED_BODY()
-	
+
 public:
 	void BeginPlay() override;
 	void Tick(float deltatime) override;
@@ -25,7 +26,7 @@ private:
 	ATank* GetControlledTank() const;
 	bool GetSightRayHitLocation(FVector& OUT_HitLocation) const;
 	bool GetCameraLookDirection(FVector2D screenLocation, FVector& cameraWorldDirection) const;
-	bool GetLookVectorHitLocation(FVector,FVector&) const;
+	bool GetLookVectorHitLocation(FVector, FVector&) const;
 
 	void AimTowardsCrosshair();
 
